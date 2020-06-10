@@ -3,23 +3,37 @@
 
 <head>
     <title>Meme Generator</title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 
 <body onload="init()">
+    <header>
+        <div class="container">
+        <img src="/img/logo.png" alt="memegen">
+        <div><ul>
+            <li class="selected">
+                Gallery
+            </li>|
+            <li>
+                About
+            </li>
+        </ul></div>
+    </div>
+    </header>
     <section class="editor">
-        <canvas width="500" height="500" onclick="onCanvasClick(event)"></canvas>
+        <canvas width="500" height="500" onclick="onCanvasClick(event)" onmousedown="onStartDragging(event)"></canvas>
+        <button onclick="onChangeSize(-2)">size-</button>
+        <button onclick="onChangeSize(+2)">size+</button>
         <button onclick="onRemoveLine()">Remove Line</button>
         <input class="lineText" oninput="onInput(event)">
-        <!-- <button onclick="onSave()" hidden>Save</button> -->
         <button onclick="onDownload()">Download</button>
     </section>
     <section class="gallery"></section>
 
-    <script src="js/storage-service.js"></script>
-    <script src="js/gallery.js"></script>
-    <script src="js/meme-service.js"></script>
-    <script src="js/main.js"></script>
+    <script src="/js/storage-service.js"></script>
+    <script src="/js/gallery.js"></script>
+    <script src="/js/meme-service.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 
 </html>
