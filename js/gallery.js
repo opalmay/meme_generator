@@ -7,7 +7,7 @@ function initGallery() {
     document.querySelector('.editor').classList.add('hidden');
     let strHtml = '';
     for (let i = 1; i <= imgCount; i++) {
-        strHtml += `<div><img onclick="onImgClick(${i})" src="img/${i}.jpg"></div>`;
+        strHtml += `<div><img onclick="onImgClick(${i})" src="/img/${i}.jpg"></div>`;
     }
     gallery.innerHTML = strHtml;
 }
