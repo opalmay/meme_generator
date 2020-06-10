@@ -26,7 +26,7 @@ function getLines() {
     return gMeme.lines;
 }
 function getMemeImgUrl() {
-    return `/img/${gMeme.selectedImgId}.jpg`;
+    return `img/${gMeme.selectedImgId}.jpg`;
 }
 function removeLine(lineToRemove) {
     gMeme.lines = getLines().filter(line => line !== lineToRemove);
