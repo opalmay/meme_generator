@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Meme Generator</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body onload="init()">
+    <section class="editor">
+        <canvas width="500" height="500" onclick="onCanvasClick(event)"></canvas>
+        <button onclick="onRemoveLine()">Remove Line</button>
+        <input class="lineText" oninput="onInput(event)">
+        <!-- <button onclick="onSave()" hidden>Save</button> -->
+        <button onclick="onDownload()">Download</button>
+    </section>
+    <section class="gallery"></section>
+
+    <script src="js/storage-service.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/meme-service.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
