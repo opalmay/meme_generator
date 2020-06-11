@@ -11,8 +11,10 @@ function initService(selectedImgId) {
         lines: [
             {
                 text: 'I never eat Falafel',
-                size: 30,
-                color: 'red',
+                size: 40,
+                font: 'impact',
+                textColor: 'white',
+                strokeColor: 'black',
                 x: 100,
                 y: 100
             }
