@@ -9,18 +9,20 @@
 <body onload="init()">
     <div class="screen" onclick="toggleMenu()"></div>
     <header>
-        <div class="container">
-            <img src="img/logo.png" alt="memegen">
+        <div class="container flex space-between align-center">
+            <img class="logo" src="img/logo.png" alt="memegen">
             <div>
                 <button class="hidden mobileMenu" onclick="toggleMenu()">☰</button>
-                <ul class="desktopMenu">
+                <ul class="menu">
                     <li class="selected">
                         <a href="index.html">
-                        Gallery
-                    </a>
+                            Gallery
+                        </a>
                     </li><span>|</span>
                     <li>
-                        About
+                        <a href="#">
+                            About
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -28,8 +30,8 @@
     </header>
     <section class="editor">
         <div class="canvas_container">
-            <canvas width="500" height="500" onclick="onCanvasClick(event)" onmousedown="onStartDragging(event)" onmouseout="onStopMovingStuff(event)"
-                ontouchstart="onStartDragging(event)"></canvas>
+            <canvas width="500" height="500" onclick="onCanvasClick(event)" onmousedown="onStartDragging(event)"
+                onmouseout="onStopMovingStuff(event)" ontouchstart="onStartDragging(event)"></canvas>
         </div>
         <div class="controls">
             <input class="lineText" oninput="onInput(event)">
@@ -39,11 +41,11 @@
                 <button onclick="onChangeSize(+2)">size+</button>
                 <div class="colorChanger">
                     <button type="button">A</button>
-                    <input type="color" value="#ff0000" oninput="onChangeStrokeColor(this)"/>
+                    <input type="color" value="#ff0000" onchange="onChangeStrokeColor(this)" />
                 </div>
                 <div class="colorChanger">
                     <button type="button">Color</button>
-                    <input type="color" value="#ff0000" oninput="onChangeTextColor(this)"/>
+                    <input type="color" value="#ff0000" onchange="onChangeTextColor(this)" />
                 </div>
             </div>
             <select class="fontSelect" onchange="onChangeFont(this)">
@@ -55,8 +57,11 @@
             <button onclick="onDownload()">Download</button>
         </div>
     </section>
-    <section class="gallery"></section>
-
+    <section class="gallery flex wrap justify-center"></section>
+    <footer class="flex justify-center align-center direction-column">
+        <img class="logo" src="img/logo.png" alt="memegen">
+        By Me!
+    </footer>
     <script src="js/storage-service.js"></script>
     <script src="js/gallery.js"></script>
     <script src="js/meme-service.js"></script>

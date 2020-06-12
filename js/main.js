@@ -3,14 +3,14 @@ const defaultText = 'Text Here';
 const defaultSize = 40;
 const defaultFont = 'Impact';
 
-
 var gCtx;
 var gLines;
 var gSelectedLine;
 var gElCanvas
 var gElImg;
+var gMoveDifferenceX, gMoveDifferenceY;
+
 function init() {
-    // initService();
     initGallery();
 }
 
@@ -25,14 +25,14 @@ function initEditor() {
     gSelectedLine = gLines[0];
     gElCanvas = document.querySelector('canvas');
     gCtx = gElCanvas.getContext('2d');
-    // resizeCanvas();
+    resizeCanvas();
     drawAll();
 }
 function drawAll() {
     clearCanvas();
-    drawImg(getMemeImgUrl());
-    function drawImg(path) {
-        gCtx.drawImage(gElImg, 0, 0, 500, 500);
+    drawImg();
+    function drawImg() {
+        gCtx.drawImage(gElImg, 0, 0, gElCanvas.width, gElCanvas.height);
         drawAllText();
     }
     function drawAllText() {
@@ -58,7 +58,7 @@ function drawAll() {
         gCtx.stroke();
     }
     function clearCanvas() {
-        gCtx.clearRect(0, 0, 500, 500);
+        gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height);
     }
 }
 
@@ -116,26 +116,36 @@ function onChangeSize(size) {
     gSelectedLine.size += size;
     drawAll();
 }
+
 function onStartDragging(ev) {
-    let selectedLine = getLineByIndexes(ev.offsetX, ev.offsetY);
+    const { x, y } = getRelativeCords(ev);
+    let selectedLine = getLineByIndexes(x, y);
     if (!selectedLine) return
     gSelectedLine = selectedLine;
-    ev.target.addEventListener("mousemove", onMoveStuff);
-    ev.target.addEventListener("mouseup", onStopMovingStuff);
-    // ev.target.addEventListener("touchmove", onMoveStuff);
-    // ev.target.addEventListener("touchend", onStopMovingStuff);
+    gMoveDifferenceX = x - gSelectedLine.x;
+    gMoveDifferenceY = y - gSelectedLine.y;
+    ev.target.addEventListener('mousemove', onMoveStuff);
+    ev.target.addEventListener('mouseup', onStopMovingStuff);
+    ev.target.addEventListener('touchmove', onMoveStuff);
+    ev.target.addEventListener('touchend', onStopMovingStuff);
 }
 function onMoveStuff(ev) {
-
-    gSelectedLine.x = ev.offsetX - (gCtx.measureText(gSelectedLine.text).width / 2);
-    gSelectedLine.y = ev.offsetY + (gSelectedLine.size / 2);
+    ev.preventDefault();
+    const { x, y } = getRelativeCords(ev);
+    gSelectedLine.x = x - gMoveDifferenceX;
+    gSelectedLine.y = y - gMoveDifferenceY;
     drawAll();
 }
+function getRelativeCords(ev) {
+    const elRect = ev.target.getBoundingClientRect();
+    return ev.type.includes('mouse') ? { x: ev.offsetX, y: ev.offsetY } :
+        { x: ev.touches[0].pageX - elRect.left, y: ev.touches[0].pageY - elRect.top };
+}
 function onStopMovingStuff(ev) {
-    ev.target.removeEventListener("mousemove", onMoveStuff);
-    ev.target.removeEventListener("mouseup", onStopMovingStuff);
-    // ev.target.removeEventListener("touchmove", onMoveStuff);
-    // ev.target.removeEventListener("touchend", onStopMovingStuff);
+    ev.target.removeEventListener('mousemove', onMoveStuff);
+    ev.target.removeEventListener('mouseup', onStopMovingStuff);
+    ev.target.removeEventListener('touchmove', onMoveStuff);
+    ev.target.removeEventListener('touchend', onStopMovingStuff);
 }
 function getLineByIndexes(x, y) {
     return gLines.find(line => {
@@ -147,25 +157,25 @@ function getLineByIndexes(x, y) {
             line.y >= y
     });
 }
+
 function resizeCanvas() {
     var elContainer = document.querySelector('.canvas_container');
-    // Note: changing the canvas dimension this way clears the canvas
-    
-    gElCanvas.width = elContainer.offsetWidth;
-    gElCanvas.height = elContainer.offsetHeight;
+    gElCanvas.width = Math.min(gElImg.width, elContainer.offsetWidth);
+    // gElCanvas.width = elContainer.offsetWidth;
+    gElCanvas.height = gElCanvas.width / (gElImg.width / gElImg.height);
 }
-function onChangeFont(el){
-    if(!gSelectedLine) return;
+function onChangeFont(el) {
+    if (!gSelectedLine) return;
     gSelectedLine.font = el.value;
     drawAll();
 }
-function onChangeTextColor(el){
-    if(!gSelectedLine) return;
+function onChangeTextColor(el) {
+    if (!gSelectedLine) return;
     gSelectedLine.textColor = el.value;
     drawAll();
 }
-function onChangeStrokeColor(el){
-    if(!gSelectedLine) return;
+function onChangeStrokeColor(el) {
+    if (!gSelectedLine) return;
     gSelectedLine.strokeColor = el.value;
     drawAll();
 }

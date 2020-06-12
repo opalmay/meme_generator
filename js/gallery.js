@@ -1,5 +1,5 @@
 'use strict'
-const imgCount = 18;
+const imgCount = 25;
 
 function initGallery() {
     let gallery = document.querySelector('.gallery');
