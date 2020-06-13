@@ -58,27 +58,35 @@
                 <option value="BalsamiqSans-Regular">BalsamiqSans</option>
             </select>
             <div class="flex justify-space">
-                <a onclick="onDownload(this)" download="meme.gif" class="fas fa-save fa-lg"></a>
+                <a onclick="onDownload()" download="meme.gif" class="fas fa-save fa-lg"></a>
                 <!-- <a onclick="onShareToFB()" download="meme.gif" class="fas fa-save fa-lg"></a> -->
             </div>
         </div>
     </section>
 
     <section class="gallery_container">
-        <div class="search">
-            <!-- <input> -->
-            <div class="tags"></div>
-        </div>
+        <div class="tags"></div>
         <div class="gallery"></div>
     </section>
     <footer class="flex justify-center align-center direction-column">
         <img class="logo" src="img/logo.png" alt="memegen">
         By Me!
     </footer>
+
+
+    <div class="font_preload" style="opacity: 0">
+        <span style="font-family: 'Impact';"></span>
+        <span style="font-family: 'BalsamiqSans-Regular';"></span>
+        <span style="font-family: 'LexendTera-Regular';"></span>
+        <span style="font-family: 'MetalMania-Regular';"></span>
+        <span style="font-family: 'Roboto-Regular';"></span>
+    </div>
     <script src="https://kit.fontawesome.com/73a41b17db.js" crossorigin="anonymous"></script>
     <script src="js/storage-service.js"></script>
     <script src="js/gallery.js"></script>
-    <script src="js/meme-service.js"></script>
+    <script src="js/editor-service.js"></script>
+    <script src="js/gallery-service.js"></script>
+    <script src="js/editor.js"></script>
     <script src="js/main.js"></script>
 </body>
 

@@ -2,8 +2,6 @@
 var filterStr = '';
 
 function initGallery() {
-    let gallery = document.querySelector('.gallery');
-    gallery.classList.remove('hidden')
     document.querySelector('.editor').classList.add('hidden');
     generateKeywords();
     generateGallery();
@@ -13,11 +11,9 @@ function generateGallery() {
     let strHtml = '';
     var filteredKeywords = getFilteredImages(filterStr);
 
-    console.log(filterStr);
     for (let i = 0; i < filteredKeywords.length; i++) {
         strHtml += `<img onclick="onImgClick(${filteredKeywords[i].id})" src="${getMemeImgUrl(filteredKeywords[i].id)}">`;
     }
-    console.log(filteredKeywords);
     gallery.innerHTML = strHtml;
 }
 function generateKeywords() {
@@ -36,6 +32,6 @@ function onFilterClick(filter) {
     generateGallery();
 }
 function onImgClick(id) {
-    initService(id);
+    initEditorService(id);
     initEditor();
 }
