@@ -10,7 +10,7 @@
 <body onload="init()">
     <div class="screen" onclick="toggleMenu()"></div>
     <header>
-        <div class="container flex space-between align-center">
+        <div class="container flex justify-space align-center">
             <img class="logo" src="img/logo.png" alt="memegen">
             <div>
                 <button class="hidden mobileMenu" onclick="toggleMenu()">☰</button>
@@ -29,40 +29,53 @@
             </div>
         </div>
     </header>
-    <section class="editor">
+    <section class="editor flex justify-evenly">
         <div class="canvas_container">
             <canvas width="500" height="500" onclick="onCanvasClick(event)" onmousedown="onStartDragging(event)"
                 onmouseout="onStopMovingStuff(event)" ontouchstart="onStartDragging(event)"></canvas>
         </div>
-        <div class="controls">
+        <div class="controls flex direction-column align-center">
+            <span class="editor_text">Click the picture to add lines or edit existing ones!</span>
             <input class="lineText" oninput="onInput(event)">
-            <button onclick="onRemoveLine()">Remove Line</button>
+            <button onclick="onRemoveLine()" class="fas fa-trash fa-lg"></button>
             <div class="flex">
-                <button onclick="onChangeSize(-2)">size-</button>
-                <button onclick="onChangeSize(+2)">size+</button>
+                <button onclick="onChangeSize(-2)" class="fas fa-angle-double-down fa-lg"></button>
+                <button onclick="onChangeSize(+2)" class="fas fa-angle-double-up fa-lg"></button>
                 <div class="colorChanger">
-                    <button type="button">A</button>
+                    <button type="button" class="fas fa-palette fa-lg"></button>
                     <input type="color" value="#ff0000" onchange="onChangeStrokeColor(this)" />
                 </div>
                 <div class="colorChanger">
-                    <button type="button">Color</button>
+                    <button type="button" class="fas fa-brush fa-lg"></button>
                     <input type="color" value="#ff0000" onchange="onChangeTextColor(this)" />
                 </div>
             </div>
             <select class="fontSelect" onchange="onChangeFont(this)">
                 <option value="Impact" selected="selected">Impact</option>
-                <option value="Times New Roman">Times New Roman</option>
-                <option value="Arial">Arial</option>
+                <option value="Roboto-Regular">Roboto</option>
+                <option value="MetalMania-Regular">MetalMania</option>
+                <option value="LexendTera-Regular">LexendTera</option>
+                <option value="BalsamiqSans-Regular">BalsamiqSans</option>
             </select>
-
-            <button onclick="onDownload()">Download</button>
+            <div class="flex justify-space">
+                <a onclick="onDownload(this)" download="meme.gif" class="fas fa-save fa-lg"></a>
+                <!-- <a onclick="onShareToFB()" download="meme.gif" class="fas fa-save fa-lg"></a> -->
+            </div>
         </div>
     </section>
-    <section class="gallery flex wrap justify-center"></section>
+
+    <section class="gallery_container">
+        <div class="search">
+            <!-- <input> -->
+            <div class="tags"></div>
+        </div>
+        <div class="gallery"></div>
+    </section>
     <footer class="flex justify-center align-center direction-column">
         <img class="logo" src="img/logo.png" alt="memegen">
         By Me!
     </footer>
+    <script src="https://kit.fontawesome.com/73a41b17db.js" crossorigin="anonymous"></script>
     <script src="js/storage-service.js"></script>
     <script src="js/gallery.js"></script>
     <script src="js/meme-service.js"></script>
