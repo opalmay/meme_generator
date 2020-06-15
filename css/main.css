@@ -32,6 +32,8 @@
 body {
     margin: 0;
     font-size: 19px;
+    min-height: 100vh;
+    position: relative;
     background-color: #e3e3e3;
 }
 
@@ -176,7 +178,9 @@ header li.selected {
     text-align: center;
     margin: 0.5rem 0;
 }
-
+.tags button{
+    padding: 0.5rem
+}
 .tags button:not(:last-child) {
     margin-right: 0.5rem;
 }
@@ -242,11 +246,6 @@ header li.selected {
 .editor .controls button {
     width: 5rem;
     height: 5rem;
-}
-
-body {
-    min-height: 100vh;
-    position: relative;
 }
 
 /* FOOTER */

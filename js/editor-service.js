@@ -1,14 +1,36 @@
 'use strict'
+const defaultText = 'Text Here';
+const defaultSize = 40;
+const defaultFont = 'Impact';
 
 var gMeme;
 
-
 // EDITOR
+
+function initEditorService(selectedImgId) {
+    gMeme = {
+        selectedImgId,
+        lines: [
+            {
+                text: 'I never eat Falafel',
+                size: defaultSize,
+                font: defaultFont,
+                textColor: 'white',
+                strokeColor: 'black',
+                x: 100,
+                y: 50
+            }
+        ]
+    };
+    gMeme.selectedLine = gMeme.lines[0]; 
+}
+
 function removeSelectedLine() {
     gMeme.lines = gMeme.lines.filter(line => line !== gMeme.selectedLine);
     if (gMeme.lines.length !== 0) gMeme.selectedLine = gMeme.lines[0];
     else gMeme.selectedLine = null;
 }
+
 function getLines() {
     return gMeme.lines;
 }
@@ -16,14 +38,17 @@ function getLines() {
 function getSelectedLine() {
     return gMeme.selectedLine;
 }
+
 function addLine(line) {
     gMeme.lines.push(line);
 }
+
 function moveSelectedLine(x, y) {
     if (!gMeme.selectedLine) return;
     gMeme.selectedLine.x = x;
     gMeme.selectedLine.y = y;
 }
+
 function changeSelectedLineText(text) {
     if (!gMeme.selectedLine) return;
     gMeme.selectedLine.text = text;
@@ -46,6 +71,19 @@ function changeSelectedLineFont(font) {
 }
 function addLine(line) {
     gMeme.lines.push(line);
+}
+function addLineWithDefaults(x, y) {
+    let newLine = {
+        text: defaultText,
+        font: defaultFont,
+        size: defaultSize,
+        textColor: 'white',
+        strokeColor: 'black',
+        y: y + (defaultSize / 2)
+    };
+    newLine.x = x - (measureLine(newLine) / 2);
+    addLine(newLine);
+    return newLine;
 }
 function setSelectedLine(line) {
     gMeme.selectedLine = line;

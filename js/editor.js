@@ -1,7 +1,4 @@
 'use strict'
-const defaultText = 'Text Here';
-const defaultSize = 40;
-const defaultFont = 'Impact';
 
 var gCtx;
 var gElCanvas
@@ -9,7 +6,8 @@ var gElImg;
 var gMoveDifferenceX, gMoveDifferenceY;
 
 //EDITOR
-function initEditor() {
+function initEditor(id) {
+    initEditorService(id)
     gElImg = new Image();
     gElImg.src = getMemeImgUrl();
     document.querySelector('.gallery').classList.add('hidden');
@@ -21,18 +19,21 @@ function initEditor() {
     onUpdateSelectedLine();
     drawAll();
 }
+
 function resizeCanvas() {
-    var elContainer = document.querySelector('.canvas_container');
+    var elContainer = document.querySelector('.editor');
+    console.log(elContainer.offsetWidth);
     gElCanvas.width = Math.min(gElImg.width, elContainer.offsetWidth);
     gElCanvas.height = gElCanvas.width / (gElImg.width / gElImg.height);
 }
+
 function drawAll(isDrawSelectedRect = true) {
     clearCanvas();
     drawImg();
     function drawImg() {
         gCtx.drawImage(gElImg, 0, 0, gElCanvas.width, gElCanvas.height);
-        drawAllText();
     }
+    drawAllText();
     function drawAllText() {
         getLines().forEach(line => drawText(line));
         function drawText(line) {
@@ -63,18 +64,7 @@ function drawAll(isDrawSelectedRect = true) {
 function onCanvasClick(ev) {
     const { offsetX, offsetY } = ev;
     let selectedLine = getLineByIndexes(offsetX, offsetY);
-    if (!selectedLine) {
-        selectedLine = {
-            text: defaultText,
-            font: defaultFont,
-            size: defaultSize,
-            textColor: 'white',
-            strokeColor: 'black',
-            y: offsetY + (defaultSize / 2)
-        };
-        selectedLine.x = offsetX - (measureLine(selectedLine) / 2);
-        addLine(selectedLine);
-    }
+    if (!selectedLine) selectedLine = addLineWithDefaults(offsetX, offsetY);
     setSelectedLine(selectedLine);
     onUpdateSelectedLine();
     drawAll();
@@ -101,6 +91,7 @@ function onUpdateSelectedLine() {
     document.querySelector('.fontSelect').value = font;
     elLineText.value = text;
 }
+
 function onDownload() {
     drawAll(false);
     setTimeout(() => {
@@ -111,42 +102,14 @@ function onDownload() {
         drawAll();
     }, 50);
 }
-// function onShareToFB() {
-//     var tempSelectedLine = gSelectedLine;
-//     gSelectedLine = null;
-//     drawAll();
-//     setTimeout(() => {
-//         // var link = document.createElement('a');
-//         // link.download = 'meme.jpg';
-//         console.log(document.querySelector('canvas').toDataURL())
-//         let u = uploadImage(document.querySelector('canvas').toDataURL());
 
-//         // link.click();
-//         gSelectedLine = tempSelectedLine;
-//         // let t = 'Check out the meme I\'ve made!';
-//         // window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(u) + '&t=' + encodeURIComponent(t), 'sharer', 'toolbar=0,status=0,width=626,height=436');
-//     }, 50);
-// }
-// function uploadImage(file){
-//     var fd = new FormData();
-//     fd.append("image", file); // Append the file
-//     // fd.append("Authorization", "Client-ID {{28587fd13d53d7e}}");
-//     // Get your own key: http://api.imgur.com/
+function onIncreaseSize() {
+    onChangeSize(2);
+}
 
-//     // Create the XHR (Cross-Domain XHR FTW!!!)
-//     var xhr = new XMLHttpRequest();
-//     xhr.open("POST", "https://api.imgur.com/3/image"); // Boooom!
-//     xhr.setRequestHeader('Authorization','Client-ID 28587fd13d53d7e');
-//     xhr.onload = function() {
-//       // Big win!
-//       // The URL of the image is:
-//       console.log(xhr.responseText);
-//       return JSON.parse(xhr.responseText).upload.links.imgur_page;
-//      }
-//      // Ok, I don't handle the errors. An exercice for the reader.
-//      // And now, we send the formdata
-//      xhr.send(file);
-//    }
+function onReduceSize() {
+    onChangeSize(-2);
+}
 
 function onChangeSize(size) {
     let selectedLine = getSelectedLine();
@@ -186,6 +149,7 @@ function onStopMovingStuff(ev) {
     ev.target.removeEventListener('touchmove', onMoveStuff);
     ev.target.removeEventListener('touchend', onStopMovingStuff);
 }
+
 function onChangeFont(el) {
     changeSelectedLineFont(el.value);
     drawAll();
@@ -198,6 +162,54 @@ function onChangeStrokeColor(el) {
     changeSelectedLineStrokeColor(el.value);
     drawAll();
 }
+
+// function changeTxtProperty(change) { // MERKAZIA
+//     switch (change) {
+//         case 'stroke':
+//             changeSelectedLineStrokeColor(el.value)
+//             break;
+//         case 'color'
+            
+//     }
+// }
+
 function toggleMenu() {
     document.body.classList.toggle('menu-open');
 }
+
+// function onShareToFB() {
+//     var tempSelectedLine = gSelectedLine;
+//     gSelectedLine = null;
+//     drawAll();
+//     setTimeout(() => {
+//         // var link = document.createElement('a');
+//         // link.download = 'meme.jpg';
+//         console.log(document.querySelector('canvas').toDataURL())
+//         let u = uploadImage(document.querySelector('canvas').toDataURL());
+
+//         // link.click();
+//         gSelectedLine = tempSelectedLine;
+//         // let t = 'Check out the meme I\'ve made!';
+//         // window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(u) + '&t=' + encodeURIComponent(t), 'sharer', 'toolbar=0,status=0,width=626,height=436');
+//     }, 50);
+// }
+// function uploadImage(file){
+//     var fd = new FormData();
+//     fd.append("image", file); // Append the file
+//     // fd.append("Authorization", "Client-ID {{28587fd13d53d7e}}");
+//     // Get your own key: http://api.imgur.com/
+
+//     // Create the XHR (Cross-Domain XHR FTW!!!)
+//     var xhr = new XMLHttpRequest();
+//     xhr.open("POST", "https://api.imgur.com/3/image"); // Boooom!
+//     xhr.setRequestHeader('Authorization','Client-ID 28587fd13d53d7e');
+//     xhr.onload = function() {
+//       // Big win!
+//       // The URL of the image is:
+//       console.log(xhr.responseText);
+//       return JSON.parse(xhr.responseText).upload.links.imgur_page;
+//      }
+//      // Ok, I don't handle the errors. An exercice for the reader.
+//      // And now, we send the formdata
+//      xhr.send(file);
+//    }

@@ -2,7 +2,8 @@
 var filterStr = '';
 
 function initGallery() {
-    document.querySelector('.editor').classList.add('hidden');
+    loadKeywords();
+    document.querySelector('.editor').classList.add('hidden'); //todo - hidden from the beggining
     generateKeywords();
     generateGallery();
 }
@@ -32,6 +33,5 @@ function onFilterClick(filter) {
     generateGallery();
 }
 function onImgClick(id) {
-    initEditorService(id);
-    initEditor();
+    initEditor(id);
 }

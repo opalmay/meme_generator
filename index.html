@@ -10,7 +10,7 @@
 <body onload="init()">
     <div class="screen" onclick="toggleMenu()"></div>
     <header>
-        <div class="container flex justify-space align-center">
+        <div class="flex justify-space align-center container">
             <img class="logo" src="img/logo.png" alt="memegen">
             <div>
                 <button class="hidden mobileMenu" onclick="toggleMenu()">☰</button>
@@ -29,18 +29,19 @@
             </div>
         </div>
     </header>
-    <section class="editor flex justify-evenly">
+
+    <section class="flex justify-evenly editor hidden">
         <div class="canvas_container">
-            <canvas width="500" height="500" onclick="onCanvasClick(event)" onmousedown="onStartDragging(event)"
+            <canvas onclick="onCanvasClick(event)" onmousedown="onStartDragging(event)"
                 onmouseout="onStopMovingStuff(event)" ontouchstart="onStartDragging(event)"></canvas>
         </div>
-        <div class="controls flex direction-column align-center">
+        <div class="flex direction-column align-center controls">
             <span class="editor_text">Click the picture to add lines or edit existing ones!</span>
             <input class="lineText" oninput="onInput(event)">
             <button onclick="onRemoveLine()" class="fas fa-trash fa-lg"></button>
             <div class="flex">
-                <button onclick="onChangeSize(-2)" class="fas fa-angle-double-down fa-lg"></button>
-                <button onclick="onChangeSize(+2)" class="fas fa-angle-double-up fa-lg"></button>
+                <button onclick="onReduceSize()" class="fas fa-angle-double-down fa-lg"></button>
+                <button onclick="onIncreaseSize()" class="fas fa-angle-double-up fa-lg"></button>
                 <div class="colorChanger">
                     <button type="button" class="fas fa-palette fa-lg"></button>
                     <input type="color" value="#ff0000" onchange="onChangeStrokeColor(this)" />
@@ -68,6 +69,8 @@
         <div class="tags"></div>
         <div class="gallery"></div>
     </section>
+
+    
     <footer class="flex justify-center align-center direction-column">
         <img class="logo" src="img/logo.png" alt="memegen">
         By Me!

@@ -29,9 +29,11 @@ var gKeywords = [
 var gKeywordsMap;
 
 // GALLERY
-function initGalleryService(){
-    loadKeywords();
-}
+
+// function initGalleryService(){
+//     loadKeywords();
+// }
+
 function getMemeImgUrl(imgId = gMeme.selectedImgId) {
     return `img/${imgId}.jpg`;
 }
@@ -63,21 +65,3 @@ function getFilteredImages(keyword) {
     return gKeywords.filter(img => img.keywords.includes(keyword));
 }
 
-function initEditorService(selectedImgId) {
-    gMeme = {
-        selectedImgId,
-        lines: [
-            {
-                text: 'I never eat Falafel',
-                size: 40,
-                font: 'Impact',
-                textColor: 'white',
-                strokeColor: 'black',
-                x: 100,
-                y: 50
-            }
-        ]
-    };
-    gMeme.selectedLine = gMeme.lines[0];
-
-}
